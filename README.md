@@ -87,14 +87,14 @@ Delete a session (must be your own “mine).
 
 ## Models
 Users
-{
-	“id”: id_val,
-	“email”: email
-	“user_name”: username,
-	“passHash”: passhash,
-	“first_name”: firstname,
-	“last_name”: lastname,
-	“admin”: admin(true/false)
-}
+
+* “id”: number,
+* “email”: string
+* “user_name”: string,
+* “passHash”: binary,
+* “first_name”: string,
+* “last_name”: string,
+* “admin”: boolean
+
 
 
