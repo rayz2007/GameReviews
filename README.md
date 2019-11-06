@@ -19,3 +19,23 @@ P0 | User | I want to find games that are available on each of the consoles I ow
 P1 | User | I want to quickly filter games that are under a certain approval rating. | Create an affordance for **GET** requests that contain a query string parameter for the approval threshold, and display the response.
 P2 | User | I want to upload my own review to contribute to overall rating of a game | Send an **HTTP POST** request that contains data about who the reviewer is and the contents of the review.
 
+## Client Description
+A web application with an interface that shows games per console, and rating scores alongside each game. Scores will be based on averages from user reviews made by those with an account. Games can be filtered by score as well. Users will also be able to leave a quick score of a game on this interface
+
+## API Endpoints
+
+### GET /v1/games
+
+### GET /v1/games/{gameid}
+
+### POST /v1/games
+
+### GET /v1/games/reviews/{gameid}
+
+### POST /v1/games/reviews
+
+### GET /v1/users/{userid}
+
+### POST /v1/users
+### POST /v1/sessions
+### DELETE /v1/sessions/{sessid}
