@@ -26,20 +26,61 @@ A web application with an interface that shows games per console, and rating sco
 
 ### GET /v1/games
 Get all game titles and information
-200: `application/json` successfully retrieved all games. Body contains encoded game information.
-500: Internal server error.
-
+* 200: `application/json` successfully retrieved all games. Body contains encoded game information.
+* 500: Internal server error.
 
 ### GET /v1/games/{gameid}
+Get game title corresponding to ID.
+* 200: `application/json` successfully retrieved game. Body contains encoded game information.
+* 400: Bad Request. ID not provided or invalid.
+* 500: Internal server error.
+
 
 ### POST /v1/games
+Post new game title.
+* 200: `application/json` successfully updated table with new game information. Body contains encoded game information.
+* 401: Unauthorized user
+* 415: Could not decode body or body is of unsupported type.
+* 500: Internal server error.
+
 
 ### GET /v1/games/reviews/{gameid}
+Get reviews for game title corresponding to provided ID.
+* 200: `application/json` successfully retrieved reviews for given game. Body contains encoded review information.
+* 400: Bad Request. ID not provided or invalid.
+* 500: Internal server 
+
 
 ### POST /v1/games/reviews
+Post new game review.
+* 200: `application/json` successfully added new review. Body contains encoded review information.
+* 415: Could not decode body or body is of unsupported type.
+* 500: Internal server error
+
 
 ### GET /v1/users/{userid}
+Get user corresponding to provided ID.
+* 200: `application/json` successfully retrieved user. Body contains encoded user information.
+* 400: Bad Request. ID not provided or invalid.
+* 500: Internal server error
+
 
 ### POST /v1/users
+Post new user credentials.
+* 200: `application/json` successfully added new user. Body contains encoded user information.
+* 415: Could not decode body or body is of unsupported type.
+* 500: Internal server error
+
 ### POST /v1/sessions
+Post a new session based on user credentials.
+* 201: `application/json` successfully authenticated/retrieved user and started session
+* 401: Unauthorized, wrong credentials
+* 415: Could not decode body or body is of unsupported type.
+* 500: Internal server error
+
 ### DELETE /v1/sessions/{sessid}
+Delete a session (must be your own “mine).
+* 200: Successfully ended session.
+* 403: The user is attempting to end another user's session.
+* 500: Internal server error.
+
