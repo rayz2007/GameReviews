@@ -96,5 +96,24 @@ Users
 * “last_name”: string,
 * “admin”: boolean
 
+Games
+	
+* “id”: number,
+* “title”: string,
+* “publisher”: string,
+* “year”: Date,
+* “coverPhotoUrl”: string,
+* “Reviews”: [reviews]
+
+
+Reviews
+
+* “id”: number,
+* “game_id”: number,
+* “user_id”: number,
+* “score”: number,
+* “summary”: string
+
+
 
 
