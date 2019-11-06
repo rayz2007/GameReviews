@@ -84,3 +84,17 @@ Delete a session (must be your own “mine).
 * 403: The user is attempting to end another user's session.
 * 500: Internal server error.
 
+
+## Models
+Users
+{
+	“id”: id_val,
+	“email”: email
+	“user_name”: username,
+	“passHash”: passhash,
+	“first_name”: firstname,
+	“last_name”: lastname,
+	“admin”: admin(true/false)
+}
+
+
