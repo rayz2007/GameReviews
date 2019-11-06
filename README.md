@@ -25,6 +25,10 @@ A web application with an interface that shows games per console, and rating sco
 ## API Endpoints
 
 ### GET /v1/games
+Get all game titles and information
+200: `application/json` successfully retrieved all games. Body contains encoded game information.
+500: Internal server error.
+
 
 ### GET /v1/games/{gameid}
 
