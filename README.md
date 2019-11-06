@@ -85,7 +85,7 @@ Delete a session (must be your own “mine).
 * 500: Internal server error.
 
 
-## Models
+## MongoDB Document Models
 Users
 
 * “id”: number,
