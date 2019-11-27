@@ -1,0 +1,25 @@
+.main {
+    height: 100%;
+}
+
+.header {
+    color: white;
+}
+.pageTitle {
+    font-size: 30pt;
+    width: auto;
+}
+
+.userButtons, .currentUser {
+    display: inline;
+    position: absolute;
+    right: 15px;
+}
+
+.userButtons Button {
+    margin: 0px 5px;
+}
+
+.hidden {
+    display: none;
+}
