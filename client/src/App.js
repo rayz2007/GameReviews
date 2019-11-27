@@ -124,9 +124,6 @@ class App extends React.Component {
           </div>
         </Header>
         <Layout>
-          <Sider>
-
-          </Sider>
           <Content>
             <LoginModal 
               visible={this.state.loginVisible || this.state.signupVisible} 
