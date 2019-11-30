@@ -20,10 +20,11 @@ class GameModal extends React.Component {
             title={game.name}
             visible={this.props.visible}
             onCancel={this.props.handleCancel}
-            onOk={this.props.handleCancel}
+            onOk={this.handlePostReview}
             okText="Write Review"
             cancelText="Close"
         >
+            
         </Modal>
     );
   }
