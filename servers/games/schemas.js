@@ -25,7 +25,8 @@ const gameSchema = new Schema({
     genre: {type: String, required: true},
     publisher: {type: String, required: true},
     developer: {type: String, required: true},
-    year: {type: Number, required: true}
+    year: {type: Number, required: true},
+    creator: {type: userSchema, required: true}
 });
 
 

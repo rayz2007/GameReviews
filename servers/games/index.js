@@ -14,8 +14,8 @@ const mongoEndpoint = "mongodb://localhost:27017/test"
 // For later when deploying
 //const mongoEndpoint = process.env.MONGOADDR;
 
-const Message = mongoose.model("message", messageSchema);
-const Channel = mongoose.model("channel", channelSchema);
+const Review = mongoose.model("review", reviewSchema);
+const Game = mongoose.model("game", gameSchema);
 const User = mongoose.model("user",userSchema);
 
 const connect = () => {

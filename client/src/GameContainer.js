@@ -10,7 +10,7 @@ class GameContainer extends React.Component {
     let cardRows = [];
     let row = [];
     for(const game of this.props.gameInfo) {
-      if(row.length < 4) {
+      if(row.length < 6) {
         row.push(<GameCard key={game.id} gameInfo={game} handleClick={this.props.handleCardClick}></GameCard>);
       } else {
         cardRows.push(<Row key={cardRows.length} gutter={[16, 16]} type="flex">{row}</Row>);
