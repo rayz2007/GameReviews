@@ -16,13 +16,13 @@ const postGameHandler = async (req, res, {Game}) => {
         creator
     };
     const query = new Game(game);
-    query.save((err) => {
+    query.save((err, newGame) => {
         if (err) {
             res.status(500).send('unable to create');
             return;
         }
         res.setHeader('content-type', 'application/json');
-        res.status(201).json(newChannel);
+        res.status(201).json(newGame);
     })
 };
 
