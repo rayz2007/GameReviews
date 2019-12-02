@@ -1,6 +1,7 @@
-const Schema =require('mongoose').Schema
+const Schema = require('mongoose').Schema
 const mongoose = require('mongoose');
-const AutoIncrement = require('mongoose-sequence')(mongoose);
+
+var autoIncrement = require('mongoose-auto-increment');
 
 const userSchema = new Schema({
     _id: false,
@@ -21,6 +22,7 @@ const reviewSchema = new Schema({
 });
 
 const gameSchema = new Schema({
+    _id: {type: Number, required: true},
     name: {type: String, required: true, unique: true},
     genre: {type: String, required: true},
     publisher: {type: String, required: true},
@@ -31,6 +33,7 @@ const gameSchema = new Schema({
 
 
 
-reviewSchema.plugin(AutoIncrement, {inc_field: 'reviewId'});
+autoIncrement.initialize(mongoose.connection);
+reviewSchema.plugin(autoIncrement.plugin, 'reviewId');
 
 module.exports = {gameSchema, reviewSchema, userSchema};
