@@ -55,7 +55,7 @@ class GameModal extends React.Component {
                 cancelText="Close"
             >
                 <div>
-                    <img src={game.photoURL}/>
+                    <img className="modalImage" src={game.photoURL}/>
                     <h2>{game.developer}</h2>
                     <h3>{game.publisher}</h3>
                     <h4>{game.year}</h4>

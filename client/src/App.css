@@ -29,6 +29,10 @@
     max-width: 300px;
 }
 
+.modalImage {
+    max-width: 350px;
+}
+
 #userDisplay {
     margin-right: 10px;
 }
