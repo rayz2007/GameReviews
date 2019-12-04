@@ -59,10 +59,10 @@ const postReviewHandler = async (req, res, { Review }) => {
     }
     const creator = JSON.parse(getAuthUser(req));
 
-    const {gameId, rating, platform, body} = req.body;
+    const {gameID, rating, platform, body} = req.body;
     const createdAt = new Date();
     const review = {
-        gameId,
+        gameID,
         rating,
         platform,
         body,

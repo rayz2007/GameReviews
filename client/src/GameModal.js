@@ -43,6 +43,8 @@ class GameModal extends React.Component {
 
     handleReviewClick = () => {
         console.log(this.state.newReview);
+        let newReview = this.state.newReview;
+        newReview.gameID = this.props.game._id;
     }
 
     onStarChange = e => {
@@ -56,10 +58,11 @@ class GameModal extends React.Component {
 
     onReviewChange = e => {
         const value = e.target.value;
+        const id = e.target.id;
         this.setState(prevState => ({
             newReview: {
                 ...prevState.newReview,
-                review: value
+                [id]: value
             }
         }));
     }
@@ -84,7 +87,8 @@ class GameModal extends React.Component {
                 </div>
                 <div>
                     <Rate allowHalf onChange={this.onStarChange}/>
-                    <TextArea rows={4} onChange={this.onReviewChange}/>
+                    <Input id="platform" placeholder="Platform" onChange={this.onReviewChange}></Input>
+                    <TextArea id="body" rows={4} onChange={this.onReviewChange}/>
                 </div>
                 <div>
                     {this.state.reviews.map((review, index) => (

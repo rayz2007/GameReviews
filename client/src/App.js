@@ -82,9 +82,9 @@ class App extends React.Component {
     // }
     fetchUser = () => { }
 
-    when back-end service is ready this function will fetch all the games.
+    //when back-end service is ready this function will fetch all the games.
     fetchGameInfo = async () => { 
-      window.fetch(gamesUrl + 'games')
+      window.fetch(baseUrl + 'games')
         .then(response => {
           return response.json();
         }).then(json => {
@@ -118,12 +118,15 @@ class App extends React.Component {
                 loginVisible: false
             });
         } else {
-            const response = await fetch(baseUrl + 'users', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(newUser),
-            })
-            console.log(await response.json());
+            // const response = await fetch(baseUrl + 'users', {
+            //     method: 'POST',
+            //     headers: { 'Content-Type': 'application/json' },
+            //     body: JSON.stringify(newUser),
+            // })
+            // console.log(await response.json());
+            this.setState({
+                loginVisible: false
+            });
         }
     };
 

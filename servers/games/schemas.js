@@ -1,7 +1,7 @@
 const Schema = require('mongoose').Schema
 const mongoose = require('mongoose');
 
-var autoIncrement = require('mongoose-auto-increment');
+// var autoIncrement = require('mongoose-auto-increment');
 
 const userSchema = new Schema({
     _id: false,
@@ -31,6 +31,14 @@ const gameSchema = new Schema({
     photoURL: {type: String, required:true},
     createdAt: {type: Date, required: true},
     creator: {type: userSchema, required: true}
+});
+
+gameSchema.set("toJSON", {
+    virtuals: true
+});
+
+reviewSchema.set("toJSON", {
+    virtuals: true
 });
 
 
