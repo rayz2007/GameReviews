@@ -8,7 +8,7 @@ import './App.css';
 import "antd/dist/antd.css";
 
 const { Header, Content } = Layout;
-const gamesUrl = 'https://api.info441-ray.me/v1/'
+const baseUrl = 'https://api.info441-ray.me/v1/'
 
 class App extends React.Component {
 
@@ -82,15 +82,15 @@ class App extends React.Component {
     // }
     fetchUser = () => { }
 
-    // when back-end service is ready this function will fetch all the games.
-    // fetchGameInfo = async () => { 
-    //   window.fetch(gamesUrl + 'games')
-    //     .then(response => {
-    //       return response.json();
-    //     }).then(json => {
-    //       this.setState({gameInfo: json});
-    //     });
-    // }
+    when back-end service is ready this function will fetch all the games.
+    fetchGameInfo = async () => { 
+      window.fetch(gamesUrl + 'games')
+        .then(response => {
+          return response.json();
+        }).then(json => {
+          this.setState({gameInfo: json});
+        });
+    }
 
     handleLoginClick = () => {
         this.setState({
@@ -113,16 +113,17 @@ class App extends React.Component {
     }
 
     handleLoginOk = e => {
-        console.log(this.state.newUser);
         if(this.state.form === "Login") {
             this.setState({
                 loginVisible: false
             });
         } else {
-            
-            this.setState({
-                loginVisible: false
-            });
+            const response = await fetch(baseUrl + 'users', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(newUser),
+            })
+            console.log(await response.json());
         }
     };
 

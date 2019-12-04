@@ -1,7 +1,9 @@
 import React from 'react';
-import { Modal, Avatar, Comment } from 'antd'
+import { Modal, Avatar, Comment, Rate, Input } from 'antd'
 import './App.css';
 import "antd/dist/antd.css";
+
+const { TextArea } = Input;
 
 class GameModal extends React.Component {
 
@@ -29,12 +31,37 @@ class GameModal extends React.Component {
                         photoURL: "https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50"
                     }
                 }
-            ]
+            ],
+            reviewFormVisible: false,
+            newReview: {}
         }
     };
 
     fetchReviews = () => {
         return;
+    }
+
+    handleReviewClick = () => {
+        console.log(this.state.newReview);
+    }
+
+    onStarChange = e => {
+        this.setState(prevState => ({
+            newReview: {
+                ...prevState.newReview,
+                rating: e
+            }
+        }));
+    }
+
+    onReviewChange = e => {
+        const value = e.target.value;
+        this.setState(prevState => ({
+            newReview: {
+                ...prevState.newReview,
+                review: value
+            }
+        }));
     }
 
     render() {
@@ -44,7 +71,7 @@ class GameModal extends React.Component {
                 title={game.name}
                 visible={this.props.visible}
                 onCancel={this.props.handleCancel}
-                onOk={this.handlePostReview}
+                onOk={this.handleReviewClick}
                 okText="Write Review"
                 cancelText="Close"
             >
@@ -54,6 +81,10 @@ class GameModal extends React.Component {
                     <h3>{game.publisher}</h3>
                     <h4>{game.year}</h4>
                     <h5>{game.genre}</h5>
+                </div>
+                <div>
+                    <Rate allowHalf onChange={this.onStarChange}/>
+                    <TextArea rows={4} onChange={this.onReviewChange}/>
                 </div>
                 <div>
                     {this.state.reviews.map((review, index) => (
