@@ -9,7 +9,7 @@ In short, the problem we are aiming to solve is the lack of a simple, focused pl
 As gamers ourselves, we would love to be able to have and use a service that allows us to browse games across any console when we want to simply do some game “window-shopping” or check how well a game that we are particularly interested in is doing. A simple interface that just shows games, with their reviews and some info about their reviews would be all we need. We would also love to provide and contribute to these reviews. 
 
 ## Architecture
-![architecture](Messages Image(3400125444).jpeg)
+![architecture](projectArch.jpeg)
 
 
 ## User Stories
