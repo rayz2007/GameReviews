@@ -86,6 +86,10 @@ class App extends React.Component {
                 this.setState({userToken: response.headers.get("Authorization")});
                 window.localStorage.setItem('token', response.headers.get("Authorization"));
                 return(response.json());
+            }).then(json => {
+                this.setState({
+                    userInfo: json
+                });
             }).catch(err => {
                 console.log(err);
             })
@@ -97,10 +101,17 @@ class App extends React.Component {
                 //body: JSON.stringify({'email': 'test@gmail.com', 'password': 'wefwef', 'passwordConf': 'wefwef', 'userName': 'testUser', 'firstName': 'testName', 'lastName': 'wer'})
                 body: JSON.stringify(this.state.newUser)
             }).then(response => {
-                this.setState({userToken: response.headers.get("Authorization")});
+                this.setState({
+                    userToken: response.headers.get("Authorization"),
+                });
                 window.localStorage.setItem('token', response.headers.get("Authorization"));
-                console.log(response);
-            }).catch(err => {
+                return(response.json());
+            }).then(json => {
+                this.setState({
+                    userInfo: json
+                });
+            })
+            .catch(err => {
                 console.log(err);
             })
         }
@@ -210,6 +221,7 @@ class App extends React.Component {
                         <Button onClick={this.handleSignupClick}>Sign Up</Button>
                     </div>
                     <div className={this.state.userToken ? "currentUser" : "currentUser hidden"}>
+                        <span>Logged in as {this.state.userInfo && this.state.userInfo.userName}</span>
                         <Button onClick={this.handleLogoutClick}>Log Out</Button>
                     </div>
                 </Header>

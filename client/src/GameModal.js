@@ -36,7 +36,6 @@ class GameModal extends React.Component {
                 filteredReviews.push(review);
             }
         }
-        console.log(filteredReviews);
         return filteredReviews;
     }
     
