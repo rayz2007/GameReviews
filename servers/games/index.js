@@ -37,8 +37,8 @@ const RequestWrapper = (handler, SchemeAndDbForwarder) => {
 app.post("/v1/games", RequestWrapper(postGameHandler, {Game}));
 app.get("/v1/games", RequestWrapper(getGameHandler, {Game}));
 app.get("/v1/games/:gameid", RequestWrapper(getSpecificGameHandler, {Game}));
-app.post("/v1/reviews", RequestWrapper(postReviewHandler, {Review}));
-app.get("/v1/reviews/:gameid", RequestWrapper(getReviewByGameHandler, {Review}));
+app.post("/v1/games/reviews", RequestWrapper(postReviewHandler, {Review}));
+app.get("/v1/games/reviews/:gameid", RequestWrapper(getReviewByGameHandler, {Review}));
 app.all("/v1/games", send405)
 app.all("/v1/game/:gameid", send405)
 app.all("/v1/reviews", send405)
