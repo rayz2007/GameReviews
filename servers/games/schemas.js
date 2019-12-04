@@ -15,6 +15,7 @@ const userSchema = new Schema({
 const reviewSchema = new Schema({
     gameID: {type: String, required: true},
     rating: {type: Number, required: true},
+    platform: {type: String, required: true},
     body: {type: String, required: true},
     createdAt: {type: Date, required: true},
     creator: {type: userSchema, required: true},
@@ -28,6 +29,7 @@ const gameSchema = new Schema({
     publisher: {type: String, required: true},
     developer: {type: String, required: true},
     year: {type: Number, required: true},
+    createdAt: {type: Date, required: true},
     creator: {type: userSchema, required: true}
 });
 

@@ -9,6 +9,7 @@ const postGameHandler = async (req, res, { Game }) => {
     const createdAt = new Date();
     const game = {
         name,
+        genre,
         publisher,
         developer,
         year,
@@ -26,7 +27,7 @@ const postGameHandler = async (req, res, { Game }) => {
     })
 };
 
-const getGamesHandler = async (req, res, { Game }) => {
+const getGameHandler = async (req, res, { Game }) => {
 	try {
         const games = await Game.find({});
         res.setHeader('content-type', 'application/json');
@@ -50,7 +51,48 @@ const getSpecificGameHandler = async (req, res, { Game }) => {
 	}
 };
 
+const postReviewHandler = async (req, res, { Review }) => {
+    if (!getAuthUser(req))  {
+        res.status(401).send('Not authorized');
+        return;
+    }
+    const creator = JSON.parse(getAuthUser(req));
+
+    const {gameId, rating, platform, body} = req.body;
+    const createdAt = new Date();
+    const review = {
+        gameId,
+        rating,
+        platform,
+        body,
+        createdAt,
+        creator
+    };
+    const query = new Review(review);
+    query.save((err, newReview) => {
+        if (err) {
+            res.status(500).send('unable to create');
+            return;
+        }
+        res.setHeader('content-type', 'application/json');
+        res.status(201).json(newReview);
+    })
+};
+
+const getReviewByGameHandler = async (req, res, { Review }) => {
+	try {
+        const id = req.query.id;
+        const reviews = await Review.find({gameId: id});
+        res.setHeader('content-type', 'application/json');
+		res.status(200).json(reviews);
+	} catch (e) {
+        res.status(500).send("There was an issue getting games");
+        return;
+	}
+};
+
 function getAuthUser(request) {
     return request.get('X-User');
 }
 
+module.exports = {postGameHandler, getGameHandler, getSpecificGameHandler, postReviewHandler, getReviewByGameHandler}

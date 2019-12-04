@@ -2,8 +2,13 @@ const express = require("express");
 const mongoose = require('mongoose');
 const port = process.env.PORT || 4000;
 const {reviewSchema, gameSchema, userSchema} = require('./schemas');
-
-const amqp = require('amqplib/callback_api');
+const {
+    postGameHandler, 
+    getGameHandler, 
+    getSpecificGameHandler, 
+    postReviewHandler, 
+    getReviewByGameHandler
+} = require('./handlers');
 
 const app = express();
 
@@ -28,7 +33,29 @@ const RequestWrapper = (handler, SchemeAndDbForwarder) => {
 	}
 }
 
+// Endpoints for the messaging microservice
+app.post("/v1/games", RequestWrapper(postGameHandler, {Game}));
+app.get("/v1/games", RequestWrapper(getGameHandler, {Game}));
+app.get("/v1/games/:gameid", RequestWrapper(getSpecificGameHandler, {Game}));
+app.post("/v1/reviews", RequestWrapper(postReviewHandler, {Review}));
+app.get("/v1/reviews/:gameid", RequestWrapper(getReviewByGameHandler, {Review}));
+app.all("/v1/games", send405)
+app.all("/v1/game/:gameid", send405)
+app.all("/v1/reviews", send405)
+app.all("/v1/reviews/:gameid", send405)
+
+function send405(req, res, next) {
+	res.setHeader('content-type', 'text/plain');
+	res.status(405).send("unaccepted method");
+}
+
 connect();
 mongoose.connection.on('error', console.error)
 	.on('disconnected', connect)
-	.once('open', main);
+    .once('open', main);
+    
+async function main() {
+    app.listen(port, "", () => {
+        console.log(`server listening ${port}`);
+    });
+}
