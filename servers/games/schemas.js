@@ -29,6 +29,7 @@ const gameSchema = new Schema({
     publisher: {type: String, required: true},
     developer: {type: String, required: true},
     year: {type: Number, required: true},
+    photoURL: {type: String, required:true},
     createdAt: {type: Date, required: true},
     creator: {type: userSchema, required: true}
 });

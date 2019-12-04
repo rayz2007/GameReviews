@@ -14,10 +14,10 @@ const app = express();
 
 app.use(express.json());
 
-const mongoEndpoint = "mongodb://localhost:27017/test"
+//const mongoEndpoint = "mongodb://localhost:27017/test"
 
 // For later when deploying
-//const mongoEndpoint = process.env.MONGOADDR;
+const mongoEndpoint = process.env.MONGOADDR;
 
 const Review = mongoose.model("review", reviewSchema);
 const Game = mongoose.model("game", gameSchema);

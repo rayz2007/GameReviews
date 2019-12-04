@@ -20,7 +20,7 @@ class GameCard extends React.Component {
                     className="gameCard"
                     hoverable
                     onClick={this.onClick}
-                    cover={<img alt={gameInfo.name} src={gameInfo.imgURL} />}
+                    cover={<img alt={gameInfo.name} src={gameInfo.photoURL} />}
                 >
                     <Meta className="cardInfo" title={gameInfo.name} description={gameInfo.developer} />
                 </Card>

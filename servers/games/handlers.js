@@ -5,7 +5,7 @@ const postGameHandler = async (req, res, { Game }) => {
     }
     const creator = JSON.parse(getAuthUser(req));
 
-    const {name, genre, publisher, developer, year} = req.body;
+    const {name, genre, publisher, developer, year, photoURL} = req.body;
     const createdAt = new Date();
     const game = {
         name,
@@ -13,6 +13,7 @@ const postGameHandler = async (req, res, { Game }) => {
         publisher,
         developer,
         year,
+        photoURL,
         createdAt,
         creator
     };

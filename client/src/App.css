@@ -20,3 +20,15 @@
 .hidden {
     display: none;
 }
+
+.addGameButton {
+    margin: 10px 10px;
+}
+
+.login-form {
+    max-width: 300px;
+}
+
+#userDisplay {
+    margin-right: 10px;
+}
