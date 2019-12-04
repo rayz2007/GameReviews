@@ -215,7 +215,7 @@ class App extends React.Component {
         return (
             <Layout className="main">
                 <Header className="header">
-                    <span className="pageTitle">Title</span>
+                    <span className="pageTitle">The Game Forum</span>
                     <div className={this.state.userToken ? "userButtons hidden" : "userButtons"}>
                         <Button onClick={this.handleLoginClick}>Log In</Button>
                         <Button onClick={this.handleSignupClick}>Sign Up</Button>
