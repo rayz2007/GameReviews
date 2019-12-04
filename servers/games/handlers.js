@@ -41,7 +41,7 @@ const getGameHandler = async (req, res, { Game }) => {
 
 const getSpecificGameHandler = async (req, res, { Game }) => {
 	try {
-        const gameId = req.query.id;
+        const gameId = req.params.gameid;
 		let game = await Game.findById(gameId);
         // EXTRA CREDIT: Fetch channels that start with a certain value in their name
         res.setHeader('content-type', 'application/json');
@@ -82,8 +82,8 @@ const postReviewHandler = async (req, res, { Review }) => {
 
 const getReviewByGameHandler = async (req, res, { Review }) => {
 	try {
-        const id = req.query.id;
-        const reviews = await Review.find({gameId: id});
+        const id = req.params.gameid;
+        const reviews = await Review.find({gameID: id});
         res.setHeader('content-type', 'application/json');
 		res.status(200).json(reviews);
 	} catch (e) {
