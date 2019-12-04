@@ -94,25 +94,24 @@ Users
 * “passHash”: binary,
 * “first_name”: string,
 * “last_name”: string,
-* “admin”: boolean
+* “photoURL”: string
 
 Games
 	
-* “id”: number,
+* “id”: string,
 * “title”: string,
 * “publisher”: string,
 * “year”: Date,
-* “coverPhotoUrl”: string,
-* “Reviews”: [reviews]
-
+* “photoUrl”: string
 
 Reviews
 
-* “id”: number,
-* “game_id”: number,
-* “user_id”: number,
+* “id”: string,
+* “gameID”: string,
+* “creator”: user,
+* “createdAt”: Date,
 * “score”: number,
-* “summary”: string
+* “body”: string
 
 
 
