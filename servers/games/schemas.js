@@ -23,7 +23,6 @@ const reviewSchema = new Schema({
 });
 
 const gameSchema = new Schema({
-    _id: {type: Number, required: true},
     name: {type: String, required: true, unique: true},
     genre: {type: String, required: true},
     publisher: {type: String, required: true},
@@ -35,8 +34,15 @@ const gameSchema = new Schema({
 });
 
 
+gameSchema.set('toJSON', {
+    virtuals: true
+});
+
+reviewSchema.set('toJSON', {
+    virtuals: true
+});
 
 autoIncrement.initialize(mongoose.connection);
-reviewSchema.plugin(autoIncrement.plugin, 'reviewId');
+reviewSchema.plugin(autoIncrement.plugin, 'id');
 
 module.exports = {gameSchema, reviewSchema, userSchema};

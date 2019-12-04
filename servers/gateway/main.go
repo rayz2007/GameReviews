@@ -21,7 +21,7 @@ func main() {
 	tlsKey := os.Getenv("TLSKEY")
 	sessKey := os.Getenv("SESSIONKEY")
 	redisAdd := os.Getenv("REDISADDR")
-	gamesAddr := os.Getenv("GAMESADDR")
+	gamesAddr := os.Getenv("GAMEADDR")
 	dsn := os.Getenv("DSN")
 	if len(tlsCert) == 0 || len(tlsKey) == 0 {
 		fmt.Println("error: env variable TLSCERT and/or TLSKEY not set")

@@ -4,11 +4,11 @@ docker rm -f gameservice
 docker pull rayz2007/gameservice
 
 # Export environment variables
-export MONGOADDR="mongodb://messagemongo:27017/gamedb"
+export MONGOADDR="mongodb://gamemongo:27017/gamesdb"
 
 # Run microservice
 docker run -d \
     --name gameservice \
-    --network gameNet \
+    --network gamenet \
     -e MONGOADDR=$MONGOADDR \
     rayz2007/gameservice:latest

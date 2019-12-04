@@ -1,7 +1,4 @@
 GOOS=linux go build
-docker build -t harik98/info441finalapi .
-docker build -t harik98/gamedb ../db
+docker build -t rayz2007/gameapi .
+docker build -t rayz2007/gameuserdb ../db
 go clean
-
-docker push harik98/info441finalapi
-docker push harik98/gamedb
