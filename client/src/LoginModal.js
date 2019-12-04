@@ -9,10 +9,10 @@ class LoginModal extends React.Component {
         return (
             <div>
                 <Input
-                    id="userName"
+                    id="email"
                     onChange={this.props.handleUserInput}
                     prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
-                    placeholder="Username"
+                    placeholder="Email"
                 />
                 <Input
                     id="password"
@@ -29,10 +29,10 @@ class LoginModal extends React.Component {
         return(
             <div>
                 <Input
-                    id="userName"
+                    id="email"
                     onChange={this.props.handleUserInput}
-                    prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
-                    placeholder="Username"
+                    prefix={<Icon type="mail" style={{ color: 'rgba(0,0,0,.25)' }} />}
+                    placeholder="Email"
                 />
                 <Input
                     id="password"
@@ -49,10 +49,10 @@ class LoginModal extends React.Component {
                     placeholder="Confirm Password"
                 />
                 <Input
-                    id="email"
+                    id="userName"
                     onChange={this.props.handleUserInput}
-                    prefix={<Icon type="mail" style={{ color: 'rgba(0,0,0,.25)' }} />}
-                    placeholder="Email"
+                    prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
+                    placeholder="Username"
                 />
                 <Input
                     id="firstName"

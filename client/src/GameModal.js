@@ -1,97 +1,78 @@
 import React from 'react';
-import { Modal, Avatar, Comment, Rate, Input } from 'antd'
+import { Modal, Avatar, Comment, Rate, Input, Checkbox } from 'antd'
 import './App.css';
 import "antd/dist/antd.css";
 
 const { TextArea } = Input;
+
+const baseUrl = 'https://api.gamereviewz.me/v1/';
 
 class GameModal extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            reviews: [
-                {
-                    rating: 4,
-                    platform: "PC",
-                    body: "I enjoyed this game greatly. Very fun. I enjoyed this game greatly. Very fun. I enjoyed this game greatly. Very fun. I enjoyed this game greatly. Very fun.",
-                    createdAt: new Date('December 17, 1995 03:24:00'),
-                    creator: {
-                        userName: "test1",
-                        photoURL: "https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50"
-                    }
-                },
-                {
-                    rating: 3.5,
-                    platform: "PC",
-                    body: "I enjoyed this game greatly. Very fun. I enjoyed this game greatly. Very fun. I enjoyed this game greatly. Very fun. I enjoyed this game greatly. Very fun.",
-                    createdAt: new Date('December 18, 2010 03:24:00'),
-                    creator: {
-                        userName: "test2",
-                        photoURL: "https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50"
-                    }
-                }
-            ],
             reviewFormVisible: false,
-            newReview: {}
+            newReview: {},
+            reviewOptions: ["PC", "PS4", "Xbox One", "Switch", "PS3", "Xbox 360", "Wii U"]
         }
-    };
-
-    fetchReviews = () => {
-        return;
     }
 
-    handleReviewClick = () => {
-        console.log(this.state.newReview);
-        let newReview = this.state.newReview;
-        newReview.gameID = this.props.game._id;
+    
+    handleOptionsChange = selected => {
+        this.setState({reviewOptions: selected});
     }
 
-    onStarChange = e => {
-        this.setState(prevState => ({
-            newReview: {
-                ...prevState.newReview,
-                rating: e
+    filterReviews = () => {
+        let standardOptions = this.state.reviewOptions.map(option => {
+            let lower = option.toLowerCase();
+            return lower.replace(/\s/g, '');
+        });
+        const reviews = this.props.reviews;
+        let filteredReviews = [];
+
+        for(let review of reviews) {
+            if(standardOptions.includes(review.platform.toLowerCase().replace(/\s/g, ''))){
+                filteredReviews.push(review);
             }
-        }));
+        }
+        console.log(filteredReviews);
+        return filteredReviews;
     }
-
-    onReviewChange = e => {
-        const value = e.target.value;
-        const id = e.target.id;
-        this.setState(prevState => ({
-            newReview: {
-                ...prevState.newReview,
-                [id]: value
-            }
-        }));
-    }
+    
 
     render() {
+        const options = ["PC", "PS4", "Xbox One", "Switch", "PS3", "Xbox 360", "Wii U"]
         const game = this.props.game;
         return (
             <Modal
                 title={game.name}
                 visible={this.props.visible}
                 onCancel={this.props.handleCancel}
-                onOk={this.handleReviewClick}
+                onOk={this.props.handleReviewClick}
+                okButtonProps={{ disabled: this.props.userToken === null }}
                 okText="Write Review"
                 cancelText="Close"
             >
                 <div>
-                    <Avatar size={128} src={game.photoURL}></Avatar>
+                    <img src={game.photoURL}/>
                     <h2>{game.developer}</h2>
                     <h3>{game.publisher}</h3>
                     <h4>{game.year}</h4>
                     <h5>{game.genre}</h5>
                 </div>
                 <div>
-                    <Rate allowHalf onChange={this.onStarChange}/>
-                    <Input id="platform" placeholder="Platform" onChange={this.onReviewChange}></Input>
-                    <TextArea id="body" rows={4} onChange={this.onReviewChange}/>
+                    <Rate allowHalf onChange={this.props.onStarChange}/>
+                    <Input id="platform" placeholder="Platform" onChange={this.props.onReviewChange}></Input>
+                    <TextArea id="body" rows={4} onChange={this.props.onReviewChange}/>
                 </div>
                 <div>
-                    {this.state.reviews.map((review, index) => (
+                    <Checkbox.Group
+                        options={options}
+                        defaultValue={options}
+                        onChange={this.handleOptionsChange}
+                    />
+                    {this.filterReviews().map((review, index) => (
                         <Comment
                             key={index}
                             author={<span>{review.creator.userName}</span>}
@@ -104,12 +85,13 @@ class GameModal extends React.Component {
                             content={
                             <div>
                             <h5>{review.rating + "/5"}</h5>
+                            <h5>{review.platform}</h5>
                             <p>
                                 {review.body}
                             </p>
                             </div>
                             }
-                            datetime={<span>{review.createdAt.toLocaleDateString("en-US")}</span>}
+                            //datetime={<span>{review.createdAt && review.createdAt.toLocaleDateString("en-US")}</span>}
                         />
                     ))}
                 </div>

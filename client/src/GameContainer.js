@@ -5,6 +5,7 @@ import AddGameModal from './AddGameModal.js'
 import './App.css';
 import "antd/dist/antd.css";
 
+const baseUrl = 'https://api.gamereviewz.me/v1/';
 class GameContainer extends React.Component {
     constructor(props){
         super(props);
@@ -38,7 +39,18 @@ class GameContainer extends React.Component {
     }
 
     handleOk = () => {
-        console.log(this.state.newGame);
+        const response = window.fetch(baseUrl + 'games', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json', "Authorization": this.props.userToken},
+            body: JSON.stringify(this.state.newGame),
+        }).then(response => {
+            console.log(response);
+            return(response);
+        }).then(() => {
+            this.props.fetchGames();
+        }).catch(err => {
+            console.log(err);
+        })
         this.setState({
             addGameVisible: false
         });
@@ -72,7 +84,7 @@ class GameContainer extends React.Component {
                 ></AddGameModal>
                 <Row gutter={[16, 16]} type="flex">
                     <Col span={12}>
-                        <Button type="primary" className="addGameButton" onClick={this.handleAddClick}>Add Game</Button>
+                        <Button type="primary" disabled={this.props.userToken === null} className="addGameButton" onClick={this.handleAddClick}>Add Game</Button>
                     </Col>
                 </Row>
                 {this.renderCards()}

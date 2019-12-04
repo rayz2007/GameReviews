@@ -21,16 +21,16 @@ class AddGameModal extends React.Component {
                     placeholder="Genre"
                 />
                 <Input
-                    id="developer"
-                    onChange={this.props.handleUserInput}
-                    prefix={<Icon type="code" style={{ color: 'rgba(0,0,0,.25)' }} />}
-                    placeholder="Developer"
-                />
-                <Input
                     id="publisher"
                     onChange={this.props.handleUserInput}
                     prefix={<Icon type="team" style={{ color: 'rgba(0,0,0,.25)' }} />}
                     placeholder="Publisher"
+                />
+                <Input
+                    id="developer"
+                    onChange={this.props.handleUserInput}
+                    prefix={<Icon type="code" style={{ color: 'rgba(0,0,0,.25)' }} />}
+                    placeholder="Developer"
                 />
                 <Input
                     id="year"
@@ -39,7 +39,7 @@ class AddGameModal extends React.Component {
                     placeholder="Year released"
                 />
                 <Input
-                    id="photo"
+                    id="photoURL"
                     onChange={this.props.handleUserInput}
                     prefix={<Icon type="picture" style={{ color: 'rgba(0,0,0,.25)' }} />}
                     placeholder="Photo URL"

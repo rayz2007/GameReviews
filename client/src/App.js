@@ -8,7 +8,7 @@ import './App.css';
 import "antd/dist/antd.css";
 
 const { Header, Content } = Layout;
-const baseUrl = 'https://api.info441-ray.me/v1/'
+const baseUrl = 'https://api.gamereviewz.me/v1/';
 
 class App extends React.Component {
 
@@ -16,80 +16,34 @@ class App extends React.Component {
         super(props);
 
         this.state = {
-            gameInfo: [
-                {
-                    id: 0,
-                    name: "Overwatch",
-                    genre: "First-person shooter",
-                    publisher: "Blizzard Entertainment",
-                    developer: "Blizzard Entertainment",
-                    year: 2016,
-                    photoURL: "https://upload.wikimedia.org/wikipedia/en/thumb/5/51/Overwatch_cover_art.jpg/220px-Overwatch_cover_art.jpg",
-                    reviews: []
-                },
-                {
-                    id: 1,
-                    name: "The Elder Scrolls V: Skyrim",
-                    genre: "Action role-playing",
-                    publisher: "Bethesda Softworks",
-                    developer: "Bethesda Game Studios",
-                    year: 2011,
-                    photoURL: "https://upload.wikimedia.org/wikipedia/en/1/15/The_Elder_Scrolls_V_Skyrim_cover.png",
-                    reviews: []
-                },
-                {
-                    id: 2,
-                    name: "Overwatch",
-                    genre: "First-person shooter",
-                    publisher: "Blizzard Entertainment",
-                    developer: "Blizzard Entertainment",
-                    year: 2016,
-                    photoURL: "https://upload.wikimedia.org/wikipedia/en/thumb/5/51/Overwatch_cover_art.jpg/220px-Overwatch_cover_art.jpg",
-                    reviews: []
-                },
-                {
-                    id: 3,
-                    name: "The Elder Scrolls V: Skyrim",
-                    genre: "Action role-playing",
-                    publisher: "Bethesda Softworks",
-                    developer: "Bethesda Game Studios",
-                    year: 2011,
-                    photoURL: "https://upload.wikimedia.org/wikipedia/en/1/15/The_Elder_Scrolls_V_Skyrim_cover.png",
-                    reviews: []
-                }
-            ],
-            user: {
-                userName: "test"
-            },
+            gameInfo: [],
+            userToken: null,
             loginVisible: false,
             gameVisible: false,
-            selectedGame: {
-                id: 0,
-                name: "Overwatch",
-                genre: "First-person shooter",
-                publisher: "Blizzard Entertainment",
-                developer: "Blizzard Entertainment",
-                year: 2016,
-                imgURL: "https://upload.wikimedia.org/wikipedia/en/thumb/5/51/Overwatch_cover_art.jpg/220px-Overwatch_cover_art.jpg",
-                reviews: []
-            },
-            newUser: {}
+            selectedGame: {},
+            newUser: {},
+            reviews: [],
+            newReview: {}
         }
     }
 
-    // componentDidMount() {
-    //   fetchGameInfo();
-    // }
-    fetchUser = () => { }
+    componentDidMount() {
+        const token = window.localStorage.getItem("token");
+        if(token && token.length > 0) {
+            this.setState({userToken: token});
+        }
+        this.fetchGameInfo();
+    }
 
     //when back-end service is ready this function will fetch all the games.
     fetchGameInfo = async () => { 
-      window.fetch(baseUrl + 'games')
-        .then(response => {
-          return response.json();
-        }).then(json => {
-          this.setState({gameInfo: json});
-        });
+        window.fetch(baseUrl + 'games')
+            .then(response => {
+                //console.log(response);
+                return response.json();
+            }).then(json => {
+                this.setState({gameInfo: json});
+            });
     }
 
     handleLoginClick = () => {
@@ -100,9 +54,19 @@ class App extends React.Component {
     }
 
     handleLogoutClick = () => {
-        this.setState({
-            user: null
-        });
+        const response = window.fetch(baseUrl + 'sessions/mine', {
+            method: 'DELETE',
+            headers: {'Content-Type': 'application/json', "Authorization": this.state.userToken},
+            body: JSON.stringify(this.state.newUser),
+        }).then(response => {
+            this.setState({
+                userToken: null
+            });
+            window.localStorage.setItem('token', '');
+            return(response);
+        }).catch(err => {
+            console.log(err);
+        })
     }
 
     handleSignupClick = () => {
@@ -114,20 +78,35 @@ class App extends React.Component {
 
     handleLoginOk = e => {
         if(this.state.form === "Login") {
-            this.setState({
-                loginVisible: false
-            });
+            const response = window.fetch(baseUrl + 'sessions', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify(this.state.newUser),
+            }).then(response => {
+                this.setState({userToken: response.headers.get("Authorization")});
+                window.localStorage.setItem('token', response.headers.get("Authorization"));
+                return(response.json());
+            }).catch(err => {
+                console.log(err);
+            })
         } else {
-            // const response = await fetch(baseUrl + 'users', {
-            //     method: 'POST',
-            //     headers: { 'Content-Type': 'application/json' },
-            //     body: JSON.stringify(newUser),
-            // })
-            // console.log(await response.json());
-            this.setState({
-                loginVisible: false
-            });
+            console.log(JSON.stringify(this.state.newUser));
+            const response = window.fetch(baseUrl + 'users', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                //body: JSON.stringify({'email': 'test@gmail.com', 'password': 'wefwef', 'passwordConf': 'wefwef', 'userName': 'testUser', 'firstName': 'testName', 'lastName': 'wer'})
+                body: JSON.stringify(this.state.newUser)
+            }).then(response => {
+                this.setState({userToken: response.headers.get("Authorization")});
+                window.localStorage.setItem('token', response.headers.get("Authorization"));
+                console.log(response);
+            }).catch(err => {
+                console.log(err);
+            })
         }
+        this.setState({
+            loginVisible: false
+        });
     };
 
     handleUserInput = (e) => {
@@ -149,24 +128,88 @@ class App extends React.Component {
         });
     };
 
+    fetchReviews = () => {
+        const game = this.state.selectedGame;
+        const response = window.fetch(baseUrl + '/games/reviews/' + game.id)
+            .then(response => {
+                console.log(response);
+                return(response.json());
+            }).then(json => {
+                console.log(json);
+                this.setState({reviews: json});
+            }).catch(err => {
+                console.log(err);
+            });
+    }
+
     handleCardClick = (game) => {
         this.setState({
             gameVisible: true,
             selectedGame: game
+        }, () => {
+            this.fetchReviews();
         });
     }
+
+    onStarChange = e => {
+        this.setState(prevState => ({
+            newReview: {
+                ...prevState.newReview,
+                rating: e
+            }
+        }));
+    }
+
+    onReviewChange = e => {
+        const value = e.target.value;
+        const id = e.target.id;
+        this.setState(prevState => ({
+            newReview: {
+                ...prevState.newReview,
+                [id]: value
+            }
+        }));
+    }
+
+    handleReviewClick = () => {
+        let {rating, platform, body} = this.state.newReview;
+        let reviews = this.state.reviews;
+        const gameID = this.state.selectedGame.id;
+        let newReview = {
+            gameID,
+            rating,
+            platform,
+            body
+        }
+        const response = window.fetch(baseUrl + 'games/reviews', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json', "Authorization": this.state.userToken},
+            body: JSON.stringify(newReview),
+        }).then(response => {
+            console.log(response);
+            return(response.json());
+        }).then(json => {
+            reviews.push(json);
+            this.setState({reviews});
+        }).catch(err => {
+            console.log(err);
+        })
+        this.setState({
+            addGameVisible: false
+        });
+    }
+    
 
     render() {
         return (
             <Layout className="main">
                 <Header className="header">
                     <span className="pageTitle">Title</span>
-                    <div className={this.state.user ? "userButtons hidden" : "userButtons"}>
+                    <div className={this.state.userToken ? "userButtons hidden" : "userButtons"}>
                         <Button onClick={this.handleLoginClick}>Log In</Button>
                         <Button onClick={this.handleSignupClick}>Sign Up</Button>
                     </div>
-                    <div className={this.state.user && this.state.user.userName ? "currentUser" : "currentUser hidden"}>
-                        <span id="userDisplay">{this.state.user && this.state.user.userName ? "Logged in as " + this.state.user.userName : ""}</span>
+                    <div className={this.state.userToken ? "currentUser" : "currentUser hidden"}>
                         <Button onClick={this.handleLogoutClick}>Log Out</Button>
                     </div>
                 </Header>
@@ -183,12 +226,19 @@ class App extends React.Component {
                         visible={this.state.gameVisible}
                         handleCancel={this.handleCancel}
                         game={this.state.selectedGame}
+                        userToken={this.state.userToken}
+                        reviews={this.state.reviews}
+                        onReviewChange={this.onReviewChange}
+                        onStarChange={this.onStarChange}
+                        handleReviewClick={this.handleReviewClick}
                     >
                     </GameModal>
                     <GameContainer
                         gameInfo={this.state.gameInfo}
                         user={this.state.user}
                         handleCardClick={this.handleCardClick}
+                        userToken={this.state.userToken}
+                        fetchGames={this.fetchGameInfo}
                     >
                     </GameContainer>
                 </Content>
