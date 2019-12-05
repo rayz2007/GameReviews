@@ -23,6 +23,14 @@ class GameModal extends React.Component {
         this.setState({reviewOptions: selected});
     }
 
+    getAverageScore = () => {
+        let sum = 0;
+        for(let review of this.props.reviews) {
+            sum += review.rating;
+        }
+        return Math.round((sum / this.props.reviews.length) * 10) / 10
+    }
+
     filterReviews = () => {
         let standardOptions = this.state.reviewOptions.map(option => {
             let lower = option.toLowerCase();
@@ -53,12 +61,17 @@ class GameModal extends React.Component {
                 okText="Write Review"
                 cancelText="Close"
             >
-                <div>
-                    <img className="modalImage" src={game.photoURL}/>
-                    <h2>{game.developer}</h2>
-                    <h3>{game.publisher}</h3>
-                    <h4>{game.year}</h4>
-                    <h5>{game.genre}</h5>
+                <div style={{display: "flex"}}>
+                    <div style={{margin: "0 10px"}}>
+                        <img className="modalImage" src={game.photoURL}/>
+                    </div>
+                    <div>
+                        <h2>{game.developer}</h2>
+                        <h3>{game.publisher}</h3>
+                        <h4>{game.year}</h4>
+                        <h5>{game.genre}</h5>
+                        <h2>{"Average rating: " + this.getAverageScore()}</h2>
+                    </div>
                 </div>
                 <div>
                     <Rate allowHalf onChange={this.props.onStarChange}/>
@@ -90,7 +103,6 @@ class GameModal extends React.Component {
                             </p>
                             </div>
                             }
-                            //datetime={<span>{review.createdAt && review.createdAt.toLocaleDateString("en-US")}</span>}
                         />
                     ))}
                 </div>
