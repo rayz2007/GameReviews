@@ -16,7 +16,7 @@ As gamers ourselves, we would love to be able to have and use a service that all
 Priority | User | Description | Implementation
 --- | --- | --- | ---
 P0 | User | I want to find games that are available on each of the consoles I own. | After a **HTTP GET** request by the client, the games service will display available games. These will be retrieved by console by default.
-P1 | User | I want to quickly filter games that are under a certain approval rating. | Create an affordance for **GET** requests that contain a query string parameter for the approval threshold, and display the response.
+P1 | User | I want to be able to add a game I don't see to leave a review. | Create a **POST** request if a logged in, authenticated user, that allows the user to fill a form to add a game to our database and the site.
 P2 | User | I want to upload my own review to contribute to overall rating of a game | Send an **HTTP POST** request that contains data about who the reviewer is and the contents of the review.
 
 ## Client Description
