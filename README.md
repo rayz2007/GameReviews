@@ -1,5 +1,7 @@
 # GameReviews
 
+Link to site: https://gamereviewz.me
+
 ## Problem 
 When looking for video games to play, one usually has to know what they are looking for, or browse on game store pages such as the Steam store. After knowing what kind of game they are looking for, one may go to a review site to get a sense of how well the game has been received by others. However, there is no real site or app for browsing games and checking out reviews simply with no other noise. Review sites like IGN simply have review articles for new games and no clear way to navigate between genres or consoles. 
 
